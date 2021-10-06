@@ -1,7 +1,7 @@
 class Robot:
-    def __init__(self, weapon):
-        self.name = ''
-        self.health = 1500
+    def __init__(self, name, health, weapon):
+        self.name = name
+        self.health = health
         self.weapon = weapon
         
 
