@@ -6,4 +6,4 @@ class Robot:
         
 
     def attack(self, dinosaur):
-        pass
+        self.weapon - dinosaur.health

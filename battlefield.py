@@ -1,27 +1,50 @@
+from herd import Herd
+from fleet import Fleet
+from robot import Robot
+from dinosaur import Dinosaur
+
 class Battlefield:
-    def __init__(self, fleet, herd):
-        self.fleet = fleet
-        self.herd = herd
+    def __init__(self):
+        self.robot_fleet = Fleet()
+        print(self.robot_fleet)
+        self.dino_herd = Herd()
 
 
     def run_game(self):
-        pass
+        self.display_welcome()
+        self.battle()
+        self.display_winners()
 
 
     def display_welcome(self):
-        pass
+        print('Welcome to Robots vs. Dinosaurs!')
 
 
     def battle(self):
-        pass
+        self.dino_turn('Velociraptor')
+        self.dino_turn('T-Rex')
+        self.dino_turn('Terrordactyl')
+        self.robo_turn('Scrappy')
+        self.robo_turn('Spare parts')
+        self.robo_turn('Shiny')
 
     
     def dino_turn(self, dinosaur):
-        pass
+        attack = self.dino_herd.attack(self.robot_fleet)
+        command = input('Attack robot fleet? yes or no? ')
+        if command == 'yes':
+            attack
+        elif command == 'no':
+            pass
 
 
     def robo_turn(self, robot):
-        pass
+        command = input('Attack dino herd? yes or no? ')
+        if command == 'yes':
+            pass
+
+        elif command =='no':
+            pass
 
 
     def show_dino_opponent_options(self):
@@ -33,4 +56,10 @@ class Battlefield:
 
 
     def display_winners(self):
-        pass
+        if self.fleet == 0:
+            print('The robots have won!')
+            
+        elif self.herd == 0:
+            print('The dinos have won!')
+
+            
