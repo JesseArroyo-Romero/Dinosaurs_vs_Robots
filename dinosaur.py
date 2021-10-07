@@ -1,4 +1,7 @@
+
 from robot import Robot
+from fleet import Fleet
+
 
 class Dinosaur:
     def __init__(self, name, attack_power, health):
@@ -8,7 +11,8 @@ class Dinosaur:
         
 
     def attack(self, robot):
-        self.attack_power - robot
+        remaining_health = robot.health - self.attack_power
+        return remaining_health
 
 
     def __str__(self):

@@ -5,9 +5,11 @@ from dinosaur import Dinosaur
 
 class Battlefield:
     def __init__(self):
-        self.robot_fleet = Fleet()
-        print(self.robot_fleet)
-        self.dino_herd = Herd()
+        self.fleet = Fleet()
+        self.fleet.create_fleet()
+        print(self.fleet.robot_fleet)
+        self.herd = Herd()
+        self.herd.create_herd()
 
 
     def run_game(self):
@@ -30,21 +32,60 @@ class Battlefield:
 
     
     def dino_turn(self, dinosaur):
-        attack = self.dino_herd.attack(self.robot_fleet)
-        command = input('Attack robot fleet? yes or no? ')
-        if command == 'yes':
-            attack
-        elif command == 'no':
+        if dinosaur == 'Velociraptor':
+            print('Look at Velociraptor go!')
+            self.herd.dino_herd[0].attack(self.fleet.robot_fleet[0])
+            print(f"Scrappy's health is: {self.fleet.robot_fleet[0].health}")
+
+            if self.fleet.robot_fleet[0].health == 0 :
+                print('Look at Velociraptor go!')
+                self.herd.dino_herd[0].attack(self.fleet.robot_fleet[1])
+                print(f"Spare parts health is: {self.fleet.robot_fleet[1].health}")
+
+                if self.fleet.robot_fleet[1].health == 0 :
+                    print('Look at Velociraptor go!')
+                    self.herd.dino_herd[0].attack(self.fleet.robot_fleet[2])
+                    print(f"Shiny's health is: {self.fleet.robot_fleet[2].health}")
+
+
+        elif dinosaur == 'T-Rex':
+            self.herd.dino_herd[1].attack(self.fleet.robot_fleet[0])
+            if self.fleet.robot_fleet[0].health == 0 :
+                self.herd.dino_herd[1].attack(self.fleet.robot_fleet[1])
+                if self.fleet.robot_fleet[1].health == 0 :
+                    self.herd.dino_herd[1].attack(self.fleet.robot_fleet[2])
+
+        elif dinosaur == 'Terrordactyl':
+            self.herd.dino_herd[2].attack(self.fleet.robot_fleet[0])
+            if self.fleet.robot_fleet[0].health == 0 :
+                self.herd.dino_herd[2].attack(self.fleet.robot_fleet[1])
+                if self.fleet.robot_fleet[1].health == 0 :
+                    self.herd.dino_herd[2].attack(self.fleet.robot_fleet[2])
+        else:
             pass
 
 
     def robo_turn(self, robot):
-        command = input('Attack dino herd? yes or no? ')
-        if command == 'yes':
-            pass
+        if robot == 'Scrappy':
+            self.fleet.robot_fleet[0].attack(self.herd.dino_herd[0])
+            if self.herd.dino_herd[0].health == 0 :
+                self.fleet.robot_fleet[0].attack(self.herd.dino_herd[1])
+                if self.herd.dino_herd[1].health == 0 :
+                    self.fleet.robot_fleet[0].attack(self.herd.dino_herd[2])
 
-        elif command =='no':
-            pass
+        elif robot == 'Spare parts':
+            self.fleet.robot_fleet[1].attack(self.herd.dino_herd[0])
+            if self.herd.dino_herd[0].health == 0 :
+                self.fleet.robot_fleet[1].attack(self.herd.dino_herd[1])
+                if self.herd.dino_herd[1].health == 0 :
+                    self.fleet.robot_fleet[1].attack(self.herd.dino_herd[2])
+
+        elif robot == 'Shiny':
+            self.fleet.robot_fleet[2].attack(self.herd.dino_herd[0])
+            if self.herd.dino_herd[0].health == 0 :
+                self.fleet.robot_fleet[2].attack(self.herd.dino_herd[1])
+                if self.herd.dino_herd[1].health == 0 :
+                    self.fleet.robot_fleet[2].attack(self.herd.dino_herd[2])
 
 
     def show_dino_opponent_options(self):
