@@ -11,9 +11,8 @@ class Dinosaur:
         
 
     def attack(self, robot):
-        remaining_health = robot.health - self.attack_power
-        return remaining_health
-
+        robot.health = robot.health - self.attack_power
+        return robot.health
 
     def __str__(self):
         return self.name

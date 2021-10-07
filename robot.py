@@ -6,8 +6,8 @@ class Robot:
         
 
     def attack(self, dinosaur):
-        remaining_health = dinosaur.health - self.weapon
-        return remaining_health
+        dinosaur.health = dinosaur.health - self.weapon
+        return dinosaur.health
 
 
     def __str__(self):

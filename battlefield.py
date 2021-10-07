@@ -15,7 +15,7 @@ class Battlefield:
     def run_game(self):
         self.display_welcome()
         self.battle()
-        self.display_winners()
+        
 
 
     def display_welcome(self):
@@ -23,70 +23,100 @@ class Battlefield:
 
 
     def battle(self):
-        self.dino_turn('Velociraptor')
-        self.dino_turn('T-Rex')
-        self.dino_turn('Terrordactyl')
-        self.robo_turn('Scrappy')
-        self.robo_turn('Spare parts')
-        self.robo_turn('Shiny')
+        fight = True
+        while fight == True:
+            self.dino_turn('Velociraptor')
+            self.dino_turn('T-Rex')
+            self.dino_turn('Terrordactyl')
+            self.robo_turn('Scrappy')
+            self.robo_turn('Spare parts')
+            self.robo_turn('Shiny')
+            if self.fleet.robot_fleet == 0:
+                fight == False
+                self.display_winners()
 
+            elif self.herd.dino_herd == 0:
+                fight == False
+                self.display_winners()         
+      
     
     def dino_turn(self, dinosaur):
-        if dinosaur == 'Velociraptor':
-            print('Look at Velociraptor go!')
-            self.herd.dino_herd[0].attack(self.fleet.robot_fleet[0])
-            print(f"Scrappy's health is: {self.fleet.robot_fleet[0].health}")
+        if self.fleet.robot_fleet != 0:
+                if dinosaur == f"{self.herd.dino_herd[0]}":
+                    if self.herd.dino_herd[0].health <= 0:
+                        del self.herd.dino_herd[0]
+                    else:
+                        print(f'Look at {self.herd.dino_herd[0]} go!')
+                        self.herd.dino_herd[0].attack(self.fleet.robot_fleet[0])
+                        print(f"{self.fleet.robot_fleet[0]}'s health is: {self.fleet.robot_fleet[0].health}")
+                              
 
-            if self.fleet.robot_fleet[0].health == 0 :
-                print('Look at Velociraptor go!')
-                self.herd.dino_herd[0].attack(self.fleet.robot_fleet[1])
-                print(f"Spare parts health is: {self.fleet.robot_fleet[1].health}")
+                elif dinosaur == f"{self.herd.dino_herd[1]}" or f"{self.herd.dino_herd[1]}" == f"{self.herd.dino_herd[0]}":
+                    if self.herd.dino_herd[1].health <= 0 :
+                        del self.herd.dino_herd[1]
+                    else:
+                        print(f"Look at {self.herd.dino_herd[1]} go! ")
+                        self.herd.dino_herd[1].attack(self.fleet.robot_fleet[0])
+                        print(f"{self.fleet.robot_fleet[0]}'s health is: {self.fleet.robot_fleet[0].health}")
 
-                if self.fleet.robot_fleet[1].health == 0 :
-                    print('Look at Velociraptor go!')
-                    self.herd.dino_herd[0].attack(self.fleet.robot_fleet[2])
-                    print(f"Shiny's health is: {self.fleet.robot_fleet[2].health}")
+                elif dinosaur == "Terrordactyl":
+                    if self.herd.dino_herd[2].health <= 0 or self.herd.dino_herd[2] == self.herd.dino_herd[1]:
+                        del self.herd.dino_herd[2]
+                        del self.herd.dino_herd[1]
+                    else:
+                        print(f"Alright {self.herd.dino_herd[2]}, your turn!")
+                        self.herd.dino_herd[2].attack(self.fleet.robot_fleet[0])
+                        print(f"Scrappy's health is: {self.fleet.robot_fleet[0].health}")          
 
-
-        elif dinosaur == 'T-Rex':
-            self.herd.dino_herd[1].attack(self.fleet.robot_fleet[0])
-            if self.fleet.robot_fleet[0].health == 0 :
-                self.herd.dino_herd[1].attack(self.fleet.robot_fleet[1])
-                if self.fleet.robot_fleet[1].health == 0 :
-                    self.herd.dino_herd[1].attack(self.fleet.robot_fleet[2])
-
-        elif dinosaur == 'Terrordactyl':
-            self.herd.dino_herd[2].attack(self.fleet.robot_fleet[0])
-            if self.fleet.robot_fleet[0].health == 0 :
-                self.herd.dino_herd[2].attack(self.fleet.robot_fleet[1])
-                if self.fleet.robot_fleet[1].health == 0 :
-                    self.herd.dino_herd[2].attack(self.fleet.robot_fleet[2])
-        else:
-            pass
+        elif self.fleet.robot_fleet == 0:
+            self.display_winners
 
 
     def robo_turn(self, robot):
-        if robot == 'Scrappy':
-            self.fleet.robot_fleet[0].attack(self.herd.dino_herd[0])
-            if self.herd.dino_herd[0].health == 0 :
-                self.fleet.robot_fleet[0].attack(self.herd.dino_herd[1])
-                if self.herd.dino_herd[1].health == 0 :
-                    self.fleet.robot_fleet[0].attack(self.herd.dino_herd[2])
+        if self.herd.dino_herd != 0:
+            if robot == f"{self.fleet.robot_fleet[0]}":
+                if self.fleet.robot_fleet[0].health <= 0 :
+                    del self.fleet.robot_fleet[0]
+                    print(self.fleet.robot_fleet)
+                else:
+                    print(f"Alright {self.fleet.robot_fleet[0]}, your turn!")
+                    self.fleet.robot_fleet[0].attack(self.herd.dino_herd[0])
+                    print(f"{self.herd.dino_herd[0]}'s remaining health is: {self.herd.dino_herd[0].health}")
 
-        elif robot == 'Spare parts':
-            self.fleet.robot_fleet[1].attack(self.herd.dino_herd[0])
-            if self.herd.dino_herd[0].health == 0 :
-                self.fleet.robot_fleet[1].attack(self.herd.dino_herd[1])
-                if self.herd.dino_herd[1].health == 0 :
-                    self.fleet.robot_fleet[1].attack(self.herd.dino_herd[2])
+            elif robot == 'Spare parts':
+                if robot == 'Spare parts':
+                    if self.fleet.robot_fleet[0].health <= 0:
+                        del self.fleet.robot_fleet[0]
+                        print(self.fleet.robot_fleet)
+                    print(f"Let's go {self.fleet.robot_fleet[0]}")
+                    self.fleet.robot_fleet[0].attack(self.herd.dino_herd[0])
+                    print(f"{self.herd.dino_herd[0]}'s health is: {self.herd.dino_herd[0].health}")
+                
+                else:
+                    print(f"Let's go {robot}!")
+                    self.fleet.robot_fleet[1].attack(self.herd.dino_herd[0])
+                    print(f"{self.herd.dino_herd[0]}'s health is: {self.herd.dino_herd[0].health}")
 
-        elif robot == 'Shiny':
-            self.fleet.robot_fleet[2].attack(self.herd.dino_herd[0])
-            if self.herd.dino_herd[0].health == 0 :
-                self.fleet.robot_fleet[2].attack(self.herd.dino_herd[1])
-                if self.herd.dino_herd[1].health == 0 :
-                    self.fleet.robot_fleet[2].attack(self.herd.dino_herd[2])
-
+            elif robot == 'Shiny' :
+                print(self.fleet.robot_fleet)
+                if robot == "Shiny":
+                    if self.fleet.robot_fleet[1].health <= 0:
+                        del self.fleet.robot_fleet[1]
+                        print(self.fleet.robot_fleet)
+                        self.robo_turn(self)
+                    print(f"Let's go {self.fleet.robot_fleet[1]}!")
+                    self.fleet.robot_fleet[1].attack(self.herd.dino_herd[0])
+                    print(f"{self.herd.dino_herd[0]}'s health is: {self.herd.dino_herd[0].health}")
+                
+                else:
+                    print(f"Let's go {robot}!")
+                    self.fleet.robot_fleet[2].attack(self.herd.dino_herd[0])
+                    print(f"{self.herd.dino_herd[0]}'s health is: {self.herd.dino_herd[0].health}")
+                
+        elif self.herd.dino_herd == 0:
+            self.display_winners()
+            
+        
 
     def show_dino_opponent_options(self):
         pass
@@ -97,10 +127,10 @@ class Battlefield:
 
 
     def display_winners(self):
-        if self.fleet == 0:
+        if self.fleet.robot_fleet == 0:
             print('The robots have won!')
             
-        elif self.herd == 0:
+        elif self.herd.dino_herd == 0:
             print('The dinos have won!')
 
             
